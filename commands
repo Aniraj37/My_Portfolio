@@ -1,0 +1,35 @@
+### App Initialization
+
+    > npm create vite@latest ./ -- --template react # --- Creates react template ---
+
+### Install TailWIND CSS
+
+    > npm install -D tailwindcss
+
+    > npx tailwindcss init 
+
+### Remaining packages to install
+
+    > npm install --legacy-peer-deps @react-three/fiber @react-three/drei maath react-tilt react-vertical-timeline-component @emailjs/browser framer-motion react-router-dom
+
+##### 1. @react-three/fiber # --- Purpose: A React renderer for Three.js, a popular JavaScript library for 3D graphics.
+
+##### 2. @react-three/drei # --- A utility library that provides helpers, abstractions, and reusable components for @react-three/fiber.
+
+##### 3. maath # --- A mathematics and utilities library often used with @react-three/fiber to handle vectors, transforms, and other 3D math operations.
+
+##### 4. react-tilt # --- A React wrapper for creating tilt or parallax effects on UI components.
+
+##### 5. react-vertical-timeline-component # --- A React component for creating vertical timelines.
+
+##### 6. @emailjs/browser # --- A library for sending emails directly from client-side JavaScript using EmailJS.
+
+##### 7. framer-motion # --- a popular animation library for React
+
+##### 8. react-router-dom # --- Provides routing capabilities for React apps.
+
+
+
+
+### COMPONENTS
+ - consists of empty structure for the project
