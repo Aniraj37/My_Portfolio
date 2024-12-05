@@ -6,7 +6,7 @@
 
     > npm install -D tailwindcss
 
-    > npx tailwindcss init 
+    > npx tailwindcss init
 
 ### Remaining packages to install
 
@@ -28,8 +28,11 @@
 
 ##### 8. react-router-dom # --- Provides routing capabilities for React apps.
 
-
-
-
 ### COMPONENTS
- - consists of empty structure for the project
+
+    - consists of empty structure for the project
+
+### In order to use Tailwind CSS in Vite use below command
+
+    - npm install --legacy-peer-deps -D postcss autoprefixer
+    - npx tailwindcss init -p  #! --- creates config file for tailewind and postcss
