@@ -36,3 +36,7 @@
 
     - npm install --legacy-peer-deps -D postcss autoprefixer
     - npx tailwindcss init -p  #! --- creates config file for tailewind and postcss
+
+
+### Install package three
+    - npm install --legacy-peer-deps three
