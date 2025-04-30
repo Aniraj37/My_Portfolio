@@ -9,10 +9,10 @@ import css from "../assets/tech/css.png";
 import reactjs from "../assets/tech/reactjs.png";
 import redux from "../assets/tech/redux.png";
 import tailwind from "../assets/tech/tailwind.png";
-import nodejs from "../assets/tech/nodejs.png";
+import python from "../assets/tech/python.png";
 import mongodb from "../assets/tech/mongodb.png";
 import git from "../assets/tech/git.png";
-import figma from "../assets/tech/figma.png";
+import django from "../assets/tech/django.png";
 import docker from "../assets/tech/docker.png";
 import yco from "../assets/company/yco.png";
 import carrent from "../assets/carrent.png";
@@ -84,8 +84,8 @@ const technologies = [
     icon: tailwind,
   },
   {
-    name: "Node JS",
-    icon: nodejs,
+    name: "Python",
+    icon: python,
   },
   {
     name: "MongoDB",
@@ -100,8 +100,8 @@ const technologies = [
     icon: git,
   },
   {
-    name: "figma",
-    icon: figma,
+    name: "django",
+    icon: django,
   },
   {
     name: "docker",
@@ -237,7 +237,7 @@ const projects = [
   {
     name: "Trip Guide",
     description:
-      "A comprehensive travel booking platform that allows users to book flights, hotels, and rental cars, and offers curated recommendations for popular destinations.",
+      "A comprehensive travel booking platform that allows users to book flights, hotels, and rental cars and offers curated recommendations for popular destinations.",
     tags: [
       {
         name: "nextjs",
