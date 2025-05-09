@@ -6,11 +6,17 @@ import { styles } from '../styles';
 import { EarthCanvas } from "./canvas";
 import { SectionWrapper } from "../hoc";
 import { slideIn } from "../utils/motion";
-import { style } from "framer-motion/client";
 
 
+const SERVICE_ID = import.meta.env.VITE_SERVICE_ID;
+const TEMPLATE_ID = import.meta.env.VITE_TEMPLATE_ID;
+const PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY;
+
+
+
+console.log(import.meta.env.VITE_SERVICE_ID)
 const Contact = () => {
-  const formRef = useRef();
+  const formRef = useRef<HTMLFormElement>(null);
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -19,8 +25,40 @@ const Contact = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e: any) => { }
-  const handleSubmit = (e: any) => { }
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value })
+  }
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    setLoading(true);
+
+    emailjs.send(
+      SERVICE_ID,
+      TEMPLATE_ID,
+      {
+        from_name: form.name,
+        to_name: 'Aniraj',
+        from_email: form.email,
+        to_email: "anirajkhadgi@gmail.com",
+        message: form.message,
+      },
+
+      PUBLIC_KEY
+    ).then(() => {
+      setLoading(false);
+      alert('Thank You. I will get back to you as soon as possible.');
+      setForm({
+        name: '',
+        email: '',
+        message: '',
+      })
+    }, (error) => {
+      setLoading(false)
+      console.log(error)
+      alert('Something went wrong.')
+    })
+  }
 
 
   return (
