@@ -10,7 +10,7 @@ import { slideIn } from "../utils/motion";
 
 const SERVICE_ID = import.meta.env.VITE_SERVICE_ID;
 const TEMPLATE_ID = import.meta.env.VITE_TEMPLATE_ID;
-const PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY;
+const PUBLIC_ID = import.meta.env.VITE_PUBLIC_ID;
 
 
 
@@ -44,7 +44,7 @@ const Contact = () => {
         message: form.message,
       },
 
-      PUBLIC_KEY
+      PUBLIC_ID
     ).then(() => {
       setLoading(false);
       alert('Thank You. I will get back to you as soon as possible.');
