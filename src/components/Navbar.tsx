@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 // --- Used for navigating to other parts. ---
 import { Link } from "react-router-dom";
@@ -34,9 +34,8 @@ const Navbar = () => {
           {navLinks.map((Link) => (
             <li
               key={Link.id}
-              className={`${
-                active === Link.title ? "text-white" : "text-secondary"
-              } hover:text-white text-[18px] font-medium cursor-pointer `}
+              className={`${active === Link.title ? "text-white" : "text-secondary"
+                } hover:text-white text-[18px] font-medium cursor-pointer `}
               onClick={() => setActive(Link.title)}>
               <a href={`#${Link.id}`}>{Link.title}</a>
             </li>
@@ -52,16 +51,14 @@ const Navbar = () => {
             onClick={() => setToggle(!toggle)}
           />
           <div
-            className={`${
-              !toggle ? "hidden" : "flex"
-            } p-6 black-gradient absolute top-20 right-0 mx-0 my-2 min-w-[140px] z-10 rounded-xl`}>
+            className={`${!toggle ? "hidden" : "flex"
+              } p-6 black-gradient absolute top-20 right-0 mx-0 my-2 min-w-[140px] z-10 rounded-xl`}>
             <ul className="list-none flex justify-end items-start flex-col gap-4">
               {navLinks.map((Link) => (
                 <li
                   key={Link.id}
-                  className={`${
-                    active === Link.title ? "text-white" : "text-secondary"
-                  } font-poppins font-medium cursor-pointer text-[16px] `}
+                  className={`${active === Link.title ? "text-white" : "text-secondary"
+                    } font-poppins font-medium cursor-pointer text-[16px] `}
                   onClick={() => {
                     setToggle(!toggle);
                     setActive(Link.title);
