@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // --- Used for navigating to other parts. ---
 import { Link } from "react-router-dom";
@@ -10,11 +10,29 @@ import menu from "../assets/menu.svg";
 import close from "../assets/close.svg";
 
 const Navbar = () => {
+  const [isVisible, setIsVisible] = useState(true); // --- for hiding navbar on scroll ---
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false); // --- for hamburger menu ---
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    const controlNavbar = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+      lastScrollY = currentScrollY;
+    }
+    window.addEventListener("scroll", controlNavbar)
+    return () => window.removeEventListener("scroll", controlNavbar)
+  }, [])
   return (
     <nav
-      className={`${styles.paddingX} w-full flex items-center py-5 fixed top-0 z-20 bg-primary`}>
+      className={`${styles.paddingX} w-full flex items-center py-5 fixed top-0 z-20 bg-primary ${isVisible ? "translate-y-0" : "-translate-y-full"}`}>
       <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
         <Link
           to="/"
