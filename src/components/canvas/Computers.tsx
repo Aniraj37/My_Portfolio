@@ -1,80 +1,116 @@
-import { Suspense, useEffect, useState } from "react";
-import { Canvas } from "@react-three/fiber"; // --- Simply an empty canvas that allows you to play around ---
-import { OrbitControls, Preload, SpotLight, useGLTF } from "@react-three/drei";
+import { Suspense, useEffect, useState, useRef } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { OrbitControls, Preload, useGLTF } from "@react-three/drei";
+import * as THREE from "three";
 import CanvasLoader from "../Loader";
 
-// - this function focuses on building threeJS model
-const Computers = ({ isMobile }: {isMobile: boolean}) => {
-  const computer = useGLTF("./desktop_pc/scene.gltf");
+// Floating animation wrapper with upward shift
+const FloatingGroup = ({ children }: { children: React.ReactNode }) => {
+  const ref = useRef<THREE.Group>(null!);
+
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime();
+    ref.current.position.y = 0.15 + Math.sin(t * 0.5) * 0.015; // Throttled floating
+  });
+
   return (
-    // --- For 3d Models always use mesh ---
-    <mesh>
-      <hemisphereLight intensity={1.5} groundColor="#1f1" />
-      <pointLight intensity={5} />
-      <SpotLight
-        position={[-20, 50, 10]}
-        angle={0.12}
-        penumbra={1}
-        intensity={1}
-        castShadow
-        shadow-mapSize={1024}
-      />
-      <primitive
-        object={computer.scene}
-        scale={isMobile ? 50 : 60}
-        position={isMobile ? [0, -3, -2] : [0.4, -2.8, -1.5]}
-        // rotation={[-0.01, -0.2, -0.1]}
-        rotation={[0.07, 0.5, -0.02]}
-      />
-    </mesh>
+    <group ref={ref} rotation={[0, Math.PI * 1.25, 0]}>
+      {children}
+    </group>
   );
 };
 
-const ComputersCanvas = () => {
-
-  const [isMobile, setIsMobile] = useState(false)
-
-  
-  useEffect(() => {
-    // -- Add a listener for changes to the screen size --
-
-    const mediaQuery = window.matchMedia('(max-width: 500px)');
-    
-    // -- Set the initial value of the 'isMobile' state value --
-    setIsMobile(mediaQuery.matches);
-
-    // -- Define a callback function to handle changes to media query --
-    const handleMediaQueryChange = (event: MediaQueryListEvent) => {
-      setIsMobile(event.matches);
-    }
-
-    // -- Add the callback function as a Listener for changes to the media query -- 
-    mediaQuery.addEventListener('change', handleMediaQueryChange);
-
-    // -- Remove the listener when the component is unmounted
-    return () => {
-      mediaQuery.removeEventListener('change', handleMediaQueryChange);
-    }
-
-  })
-  
+const SafeModel = ({
+  modelPath,
+  position,
+  rotation = [0, 0, 0],
+  scale,
+}: {
+  modelPath: string;
+  position: [number, number, number];
+  rotation?: [number, number, number];
+  scale: number;
+}) => {
+  const { scene } = useGLTF(modelPath);
   return (
+    <group position={position} rotation={rotation}>
+      <primitive object={scene} scale={scale} />
+    </group>
+  );
+};
+
+const FloatingAstronautLaptop = ({ isMobile }: { isMobile: boolean }) => {
+  const astronautPos: [number, number, number] = isMobile ? [0, -1.1, 0] : [0, -1.2, 0];
+  const laptopPos: [number, number, number] = isMobile ? [0.3, -0.5, 0.8] : [0.35, -0.6, 0.85];
+
+  return (
+    <FloatingGroup>
+      <SafeModel
+        modelPath="/models/astronaut.glb"
+        position={astronautPos}
+        scale={isMobile ? 0.4 : 0.4}
+      />
+      <SafeModel
+        modelPath="/models/laptop.glb"
+        position={laptopPos}
+        rotation={[0, Math.PI, -0.1]}
+        scale={isMobile ? 0.004 : 0.004}
+      />
+    </FloatingGroup>
+  );
+};
+
+const Scene = ({ isMobile }: { isMobile: boolean }) => (
+  <group>
+    <hemisphereLight intensity={1} groundColor="#1f1f1f" />
+    <ambientLight intensity={0.5} />
+    <pointLight position={[0, 3, 3]} intensity={1.2} />
+    <FloatingAstronautLaptop isMobile={isMobile} />
+  </group>
+);
+
+const ComputersCanvas = ({ cameraPosition = [0, 0.2, 4.5] as [number, number, number] }) => {
+  const [isMobile, setIsMobile] = useState(false);
+  const [frameLoop, setFrameLoop] = useState<"always" | "demand">("always");
+  const [showCanvas, setShowCanvas] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 500px)");
+    setIsMobile(mediaQuery.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setShowCanvas(true);
+      setTimeout(() => setFrameLoop("demand"), 2000);
+    }, 500);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  return showCanvas ? (
     <Canvas
-      frameloop="demand"
-      shadows
-      camera={{ position: [20, 3, 5], fov: 25 }}
-      gl={{ preserveDrawingBuffer: true }}>
+      style={{ display: "block", height: "100%", width: "100%" }}
+      dpr={[1, 1.5]}
+      frameloop={frameLoop}
+      shadows={false}
+      camera={{ position: cameraPosition, fov: 30 }}
+      gl={{ preserveDrawingBuffer: true }}
+    >
       <Suspense fallback={<CanvasLoader />}>
         <OrbitControls
           enableZoom={false}
+          enablePan={false}
           maxPolarAngle={Math.PI / 2}
-          minPolarAngle={Math.PI / 2}
+          minPolarAngle={Math.PI / 3}
         />
-        <Computers isMobile = {isMobile} />
+        <Scene isMobile={isMobile} />
       </Suspense>
-
       <Preload all />
     </Canvas>
-  );
+  ) : null;
 };
+
 export default ComputersCanvas;
