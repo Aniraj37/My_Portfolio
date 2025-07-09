@@ -40,21 +40,21 @@ const SafeModel = ({
 };
 
 const FloatingAstronautLaptop = ({ isMobile }: { isMobile: boolean }) => {
-  const astronautPos: [number, number, number] = isMobile ? [0, -1.1, 0] : [0, -1.2, 0];
-  const laptopPos: [number, number, number] = isMobile ? [0.3, -0.5, 0.8] : [0.35, -0.6, 0.85];
+const astronautPos: [number, number, number] = isMobile ? [0, -1.0, 0] : [0, -1.1, 0]; 
+  const laptopPos: [number, number, number] = isMobile ? [0.3, 0.0, 0.8] : [0.2, 0., 0.85];
 
   return (
     <FloatingGroup>
       <SafeModel
         modelPath="/models/astronaut.glb"
         position={astronautPos}
-        scale={isMobile ? 0.4 : 0.4}
+        scale={isMobile ? 0.38 : 0.45}
       />
       <SafeModel
         modelPath="/models/laptop.glb"
         position={laptopPos}
         rotation={[0, Math.PI, -0.1]}
-        scale={isMobile ? 0.004 : 0.004}
+        scale={isMobile ? 0.0033 : 0.0035} 
       />
     </FloatingGroup>
   );

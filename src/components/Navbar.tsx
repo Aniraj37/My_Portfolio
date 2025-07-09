@@ -34,7 +34,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`${styles.paddingX} w-full flex items-center py-5 fixed top-0 z-20 bg-primary transition-transform duration-300 ${
+      className={`${styles.paddingX} w-full bg-primary flex items-center py-5 fixed top-0 z-20 transition-transform duration-300 ${
         show ? "translate-y-0" : "-translate-y-full"
       }`}
     >

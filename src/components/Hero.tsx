@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { styles } from "../styles";
 import { ComputersCanvas } from "./canvas";
@@ -24,7 +23,6 @@ const Hero = () => {
         justify-between
         gap-10
         overflow-x-hidden
-        bg-space-bg
       "
       aria-label="Introduction section"
     >
@@ -37,9 +35,8 @@ const Hero = () => {
             aria-hidden="true"
             style={{ willChange: "transform" }}
           />
-          {/* Vertical line with gradient (you can define violet-gradient in Tailwind or replace) */}
           <div
-            className="w-1 sm:h-72 h-36 violet-gradient"
+            className="w-1 sm:h-72 h-36 bg-gradient-to-r from-[#60c565] to-transparent"
             aria-hidden="true"
             style={{ willChange: "height" }}
           />
@@ -73,31 +70,14 @@ const Hero = () => {
       )}
 
       {/* Scroll down indicator */}
-      <div
-        className="
-          absolute bottom-6 left-0 right-0
-          flex justify-center items-center
-          pointer-events-auto z-50
-        "
-      >
-        <a href="#about" aria-label="Scroll down to About section">
-          <div
-            className="
-              w-[35px] h-[64px]
-              rounded-3xl border-4 border-space-secondary
-              flex justify-center items-start p-2
-            "
-            aria-hidden="true"
-          >
-            <motion.div
-              animate={{ y: [0, 24, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, repeatType: "loop" }}
-              className="w-3 h-3 rounded-full bg-space-secondary mb-1"
-              style={{ willChange: "transform" }}
-            />
-          </div>
-        </a>
-      </div>
+<div className="absolute xs:bottom-5 bottom-32 w-full flex justify-center items-center">
+  <a href="#about" aria-label="Scroll down to About section">
+    <div className="w-[35px] h-[64px] rounded-3xl border-4 border-secondary flex justify-center items-start p-2">
+      <div className="w-3 h-3 rounded-full bg-secondary mb-1 animate-scrollDot"></div>
+    </div>
+  </a>
+</div>
+
     </section>
   );
 };

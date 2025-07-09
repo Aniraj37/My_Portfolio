@@ -4,7 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 * {
   margin: 0;
   padding: 0;
@@ -44,11 +43,20 @@
   );
 }
 
+/* replaced green-pink-gradient */
 .green-pink-gradient {
-  background: "#00cea8";
-  background: linear-gradient(90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
-  background: -webkit-linear-gradient(-90.13deg, #00cea8 1.9%, #bf61ff 97.5%);
+  background: linear-gradient(
+    90deg,
+    #00cea8 0%,   /* bright teal */
+    #0f6b3a 100%  /* deep forest green */
+  );
+  background: -webkit-linear-gradient(
+    90deg,
+    #00cea8 0%, 
+    #0f6b3a 100%
+  );
 }
+
 
 .orange-text-gradient {
   background: #f12711; /* fallback for old browsers */
@@ -203,4 +211,3 @@
       -2.6em 0em 0 0em rgba(255, 255, 255, 0.7), -1.8em -1.8em 0 0em #ffffff;
   }
 }
-
